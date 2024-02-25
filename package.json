@@ -1,0 +1,23 @@
+{
+  "name": "AutoPoe",
+  "version": "0.1.0",
+  "description": "AutoPoe is a web automation tool designed to seamlessly interact with bots on Poe by leveraging the OpenAI API.",
+  "private": true,
+  "scripts": {
+    "watch": "node ./node_modules/webpack/bin/webpack.js --mode=development --watch --config config/webpack.config.js",
+    "build": "node ./node_modules/webpack/bin/webpack.js --mode=production --config config/webpack.config.js"
+  },
+  "devDependencies": {
+    "copy-webpack-plugin": "^6.4.1",
+    "css-loader": "^6.10.0",
+    "file-loader": "^6.2.0",
+    "mini-css-extract-plugin": "^0.10.1",
+    "size-plugin": "^2.0.2",
+    "webpack": "^5.90.1",
+    "webpack-cli": "^4.10.0",
+    "webpack-merge": "^5.10.0"
+  },
+  "dependencies": {
+    "turndown": "^7.1.2"
+  }
+}

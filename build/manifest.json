@@ -1,0 +1,35 @@
+{
+  "manifest_version": 3,
+  "name": "AutoPoe",
+  "version": "0.1.0",
+  "description": "AutoPoe is a web automation tool designed to seamlessly interact with bots on Poe by leveraging the OpenAI API.",
+  "icons": {
+    "16": "icons/icon_16.png",
+    "32": "icons/icon_32.png",
+    "48": "icons/icon_48.png",
+    "128": "icons/icon_128.png"
+  },
+  "background": {
+    "service_worker": "background.js"
+  },
+  "action": {
+    "default_title": "AutoPoe",
+    "default_popup": ""
+  },
+  "permissions": [
+    "storage",
+    "tabs"
+  ],
+  "content_scripts": [
+    {
+      "matches": [
+        "https://poe.com/*"
+      ],
+      "run_at": "document_idle",
+      "js": [
+        "contentScript.js"
+      ]
+    }
+  ],
+  "minimum_chrome_version": "116"
+}
