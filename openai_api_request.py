@@ -5,7 +5,7 @@ client = openai.OpenAI(
     api_key = "sk-no-key-required"
 )
 
-use_stream = True
+use_stream = False
 completion = client.chat.completions.create(
     model="GPT-3.5-Turbo",
     messages=[
@@ -13,12 +13,9 @@ completion = client.chat.completions.create(
     ], stream=use_stream
 )
 
-if completion.response.status_code == 200:
-    if use_stream:
-        for chunk in completion:
-            print(chunk.choices[0].delta.content, end="")
-    else:
-        content = response.choices[0].message.content
-        print(content)
+if use_stream:
+    for chunk in completion:
+        print(chunk.choices[0].delta.content, end="")
 else:
-    print("Error: {}".format(completion.response.content))
+    content = completion.choices[0].message.content
+    print(content)

@@ -5,8 +5,7 @@ from fastapi import FastAPI, WebSocket, HTTPException, Response, Depends
 from fastapi.middleware.cors import CORSMiddleware
 from sse_starlette.sse import EventSourceResponse
 from pydantic import BaseModel, Field
-from typing import Dict, List, Optional, Union
-from typing_extensions import Literal
+from typing import Dict, List, Optional, Union, Literal
 import time
 
 class ModelCard(BaseModel):
@@ -205,7 +204,6 @@ async def create_chat_completion(request: ChatCompletionRequest):
                 except asyncio.TimeoutError:
                     raise HTTPException(status_code=500, detail="Poe did not respond")
 
-                print(text)
                 if text is False: 
                     text_queue = asyncio.Queue()
                     raise HTTPException(status_code=500, detail="Poe not ready")
@@ -238,7 +236,11 @@ async def create_chat_completion(request: ChatCompletionRequest):
     global text_queue
     data = ''
     while True:
-        text = await text_queue.get()
+        try: text = await asyncio.wait_for(text_queue.get(), timeout=10.0)
+        except asyncio.TimeoutError:
+            raise HTTPException(status_code=500, detail="Poe did not respond")
+        
+        print(text)
         if text is False: 
             text_queue = asyncio.Queue()
             raise HTTPException(status_code=500, detail="Poe not ready")
